@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main
-    paths-ignore:
-      - .github/workflows/**
   pull_request:
     types: [opened]
     branches: [main]
@@ -25,7 +23,21 @@ jobs:
         run: npm ci
       - name: Run tests
         run: npm test
-
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v4
+      - name: Install dependencies
+        run: npm ci
+      - name: Build website
+        run: npm run build
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: website-files
+          path: dist
   deploy:
     needs: test
     runs-on: ubuntu-latest
