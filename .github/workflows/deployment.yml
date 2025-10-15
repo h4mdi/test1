@@ -41,4 +41,4 @@ jobs:
       - name: Build project
         run: npm run build
       - name: Deploy
-        run: echo "Simulated deployment complete!"
+        run: echo "Simulated deployment complete...."
