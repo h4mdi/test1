@@ -39,18 +39,14 @@ jobs:
           name: website-files
           path: dist
   deploy:
-    needs: test
+    needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Get build artifacts
+        uses: actions/download-artifact@v4
         with:
-          node-version: 20
-      - name: Install dependencies
-        run: npm ci
-      - name: Build project
-        run: npm run build
-      - name: Deploy
-        run: echo "Simulated deployment complete...."
+          name: website-files
+      - name: List downloaded files
+        run: ls -l
+      - name: Simulate deployment
+        run: echo "Deploying website files to web server..."
